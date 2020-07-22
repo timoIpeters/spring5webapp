@@ -67,4 +67,36 @@ public class Author {
   public void setBooks(Set<Book> books) {
     this.books = books;
   }
+
+  //basic toString implementation (ALT+INSERT)
+  @Override
+  public String toString() {
+    return "Author{" +
+        "id=" + id +
+        ", firstName='" + firstName + '\'' +
+        ", lastName='" + lastName + '\'' +
+        ", books=" + books +
+        '}';
+  }
+
+  //equals function based on id
+  //used IntelliJ Default template to generate equals function
+  @Override
+  public boolean equals(Object o) {
+    if (this == o)
+      return true;
+    if (o == null || getClass() != o.getClass())
+      return false;
+
+    Author author = (Author) o;
+
+    return id != null ? id.equals(author.id) : author.id == null;
+  }
+
+  //hashCode function for the id
+  //used IntelliJ Default template to generate hashCode function
+  @Override
+  public int hashCode() {
+    return id != null ? id.hashCode() : 0;
+  }
 }
