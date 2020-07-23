@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Author List</title>
+</head>
+<body>
+<h1>Author List</h1>
+
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Firstname</th>
+    <th>Lastname</th>
+  </tr>
+  <tr th:each="author : ${authors}"> <!-- iterator over every book (<td>s rendered for every book in our database)-->
+    <td th:text="${author.id}">123</td> <!-- override content of the td tags -->
+    <td th:text="${author.getFirstName()}">Firstname</td>
+    <td th:text="${author.getLastName()}">Lastname</td>
+  </tr>
+</table>
+</body>
+</html>
