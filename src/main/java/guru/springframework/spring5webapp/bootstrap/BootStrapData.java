@@ -32,30 +32,6 @@ public class BootStrapData implements CommandLineRunner {
 
     System.out.println("Started in Bootstrap");
 
-    //create author and book
-    Author timo = new Author("Timo", "Peters");
-    Book myBook = new Book("Book Title", "123456789");
-
-    //add author and book
-    timo.getBooks().add(myBook);
-    myBook.getAuthors().add(timo);
-
-    //safe in the repository
-    //saves book and author in the H2 Database
-    authorRepository.save(timo);
-    bookRepository.save(myBook);
-
-    //second example
-    Author rod = new Author("Rod", "Johnson");
-    Book noEJB = new Book("J2EE Development without EJB", "5495782459437");
-    rod.getBooks().add(noEJB);
-    noEJB.getAuthors().add(rod);
-    authorRepository.save(rod);
-    bookRepository.save(noEJB);
-
-    //output when starting spring application
-    System.out.println("Number of Books: " + bookRepository.count());
-
     //add Publisher
     Publisher pub = new Publisher();
     pub.setName("Springer");
@@ -66,5 +42,37 @@ public class BootStrapData implements CommandLineRunner {
     publisherRepository.save(pub);
 
     System.out.println("Publisher count: " + publisherRepository.count());
+
+    //create author and book
+    Author timo = new Author("Timo", "Peters");
+    Book myBook = new Book("Book Title", "123456789");
+
+    //add author and book
+    timo.getBooks().add(myBook);
+    myBook.getAuthors().add(timo);
+
+    myBook.setPublisher(pub);
+    pub.getBooks().add(myBook);
+
+    //safe in the repository
+    //saves book and author in the H2 Database
+    authorRepository.save(timo);
+    bookRepository.save(myBook);
+    publisherRepository.save(pub);
+
+    //second example
+    Author rod = new Author("Rod", "Johnson");
+    Book noEJB = new Book("J2EE Development without EJB", "5495782459437");
+    rod.getBooks().add(noEJB);
+    noEJB.getAuthors().add(rod);
+    noEJB.setPublisher(pub);
+    pub.getBooks().add(noEJB);
+    authorRepository.save(rod);
+    bookRepository.save(noEJB);
+    publisherRepository.save(pub);
+
+    //output when starting spring application
+    System.out.println("Number of Books: " + bookRepository.count());
+    System.out.println("Publisher Number of Books: " + pub.getBooks().size());
   }
 }

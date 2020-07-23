@@ -10,6 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.JoinColumnOrFormula;
 
 @Entity
 public class Book {
@@ -28,12 +31,24 @@ public class Book {
   @JoinTable(name = "author_book", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "author_id"))
   private Set<Author> authors = new HashSet<>(); //initialized by default so authors can be added
 
+  //every book can only have one publisher
+  @ManyToOne
+  private Publisher publisher; //for the book publisher mapping
+
   public Book() {
   }
 
   public Book(String title, String isbn) {
     this.title = title;
     this.isbn = isbn;
+  }
+
+  public Publisher getPublisher() {
+    return publisher;
+  }
+
+  public void setPublisher(Publisher publisher) {
+    this.publisher = publisher;
   }
 
   public Long getId() {

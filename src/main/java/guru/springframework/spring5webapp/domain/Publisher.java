@@ -1,11 +1,14 @@
 package guru.springframework.spring5webapp.domain;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Publisher {
@@ -20,7 +23,21 @@ public class Publisher {
   private String country;
   private String postalcode;
 
+  //publisher is one and has many books
+  @OneToMany
+  //adds publisher id to the book record
+  @JoinColumn(name = "publisher_id") //hint for hibernate
+  private Set<Book> books = new HashSet<>(); //for the book publisher mapping
+
   public Publisher() {
+  }
+
+  public Set<Book> getBooks() {
+    return books;
+  }
+
+  public void setBooks(Set<Book> books) {
+    this.books = books;
   }
 
   public Long getId() {
