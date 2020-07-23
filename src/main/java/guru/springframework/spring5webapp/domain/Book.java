@@ -12,8 +12,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
-import org.hibernate.annotations.JoinColumnOrFormula;
-
 @Entity
 public class Book {
 
@@ -90,7 +88,7 @@ public class Book {
         "id=" + id +
         ", title='" + title + '\'' +
         ", isbn='" + isbn + '\'' +
-        ", authors=" + authors +
+        //authors deleted -> intercircular reference (infinite loop)
         '}';
   }
 
