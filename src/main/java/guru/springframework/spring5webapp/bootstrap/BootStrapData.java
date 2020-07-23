@@ -5,8 +5,10 @@ import org.springframework.stereotype.Component;
 
 import guru.springframework.spring5webapp.domain.Author;
 import guru.springframework.spring5webapp.domain.Book;
+import guru.springframework.spring5webapp.domain.Publisher;
 import guru.springframework.spring5webapp.repositories.AuthorRepository;
 import guru.springframework.spring5webapp.repositories.BookRepository;
+import guru.springframework.spring5webapp.repositories.PublisherRepository;
 
 //CommandLineRunner -> spring looks for instances of this type. If it finds some, it runs them
 //@Component -> tells spring framework to detect this as a spring managed component
@@ -16,15 +18,19 @@ public class BootStrapData implements CommandLineRunner {
   //dependency injection
   private final AuthorRepository authorRepository;
   private final BookRepository bookRepository;
+  private final PublisherRepository publisherRepository;
 
   public BootStrapData(AuthorRepository authorRepository,
-      BookRepository bookRepository) {
+      BookRepository bookRepository, PublisherRepository publisherRepository) {
     this.authorRepository = authorRepository;
     this.bookRepository = bookRepository;
+    this.publisherRepository = publisherRepository;
   }
 
   @Override
   public void run(String... args) throws Exception {
+
+    System.out.println("Started in Bootstrap");
 
     //create author and book
     Author timo = new Author("Timo", "Peters");
@@ -48,7 +54,17 @@ public class BootStrapData implements CommandLineRunner {
     bookRepository.save(noEJB);
 
     //output when starting spring application
-    System.out.println("Started in Bootstrap");
     System.out.println("Number of Books: " + bookRepository.count());
+
+    //add Publisher
+    Publisher pub = new Publisher();
+    pub.setName("Springer");
+    pub.setCountry("Germany");
+    pub.setCity("Cologne");
+    pub.setPostalcode("46743");
+    pub.setAddressLine1("some street");
+    publisherRepository.save(pub);
+
+    System.out.println("Publisher count: " + publisherRepository.count());
   }
 }
